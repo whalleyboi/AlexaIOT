@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
+  <Identity Name="AlexaIOT" Publisher="CN=trevo_000" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="449485e6-19ea-43a9-8c54-176cde10d41a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>AlexaIOT</DisplayName>
+    <PublisherDisplayName>Whalleyboi</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="AlexaIOT.App">
+      <uap:VisualElements DisplayName="AlexaIOT" Square150x150Logo="Assets\Wide310x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Amazon Alexa on Windows IOT" BackgroundColor="black">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="AlexaIOT">
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="black" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+        </uap:InitialRotationPreference>
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="xml">
+            <uap:DisplayName>xml</uap:DisplayName>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.xml</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <!--
+        <uap:Extension Category="windows.appService" EntryPoint="HttpServer.AppService">
+          <uap:AppService Name="App2AppComService" />
+        </uap:Extension>
+-->
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="allJoyn" />
+    <Capability Name="codeGeneration" />
+    <Capability Name="privateNetworkClientServer" />
+    <uap:Capability Name="removableStorage" />
+    <uap:Capability Name="musicLibrary" />
+    <uap:Capability Name="picturesLibrary" />
+    <uap:Capability Name="videosLibrary" />
+    <uap:Capability Name="appointments" />
+    <uap:Capability Name="blockedChatMessages" />
+    <uap:Capability Name="chat" />
+    <uap:Capability Name="contacts" />
+    <uap:Capability Name="enterpriseAuthentication" />
+    <uap:Capability Name="objects3D" />
+    <uap:Capability Name="phoneCall" />
+    <uap:Capability Name="sharedUserCertificates" />
+    <uap:Capability Name="userAccountInformation" />
+    <uap:Capability Name="voipCall" />
+    <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
+    <DeviceCapability Name="bluetooth" />
+    <DeviceCapability Name="location" />
+    <DeviceCapability Name="proximity" />
+  </Capabilities>
+</Package>

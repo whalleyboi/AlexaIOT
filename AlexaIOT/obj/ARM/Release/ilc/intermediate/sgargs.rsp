@@ -1,0 +1,8 @@
+/out:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\intermediate\SgGenerated\\"
+/int:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\intermediate\\"
+/ref:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\intermediate\PreMergeILTransformed\\"
+/ref:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\in\\"
+/ref:"C:\Program Files (x86)\MSBuild\Microsoft\.NetNative\ARM\ilc\lib\Private\\"
+/ref:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\in\\"
+/ref:"e:\Users\trevo_000\documents\visual studio 2015\Projects\App1\App1\obj\ARM\Release\ilc\in\WinMetadata\\"
+/ca:System.Private.CoreLib
