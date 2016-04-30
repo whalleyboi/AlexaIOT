@@ -19,7 +19,6 @@ namespace AlexaIOT
     public partial class MainPage : Page
     {
         Server server;
-        private Timer timer;
         private MediaCapture _mediaCapture;
         MediaPlayer player = BackgroundMediaPlayer.Current;
         MediaElement mysong = new MediaElement();
@@ -28,15 +27,18 @@ namespace AlexaIOT
         private SpeechRecognizer speechRecognizer;
 
         // Keep track of whether the continuous recognizer is currently running, so it can be cleaned up appropriately.
-        private bool isListening;
+        public bool isListening = false;
 
         // Speech events may come in on a thread other than the UI thread, keep track of the UI thread's
         // dispatcher, so we can update the UI in a thread-safe manner.
         private CoreDispatcher dispatcher;
 
+        API2 api2 = new API2();
+
         public MainPage()
         {
             this.InitializeComponent();
+
             isListening = false;
             try
             {
@@ -46,14 +48,8 @@ namespace AlexaIOT
 
             dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
-            Ini.IPAddress = Server.GetLocalIp(); // Hard coded until i get a method to detect it.
+            Ini.IPAddress = Server.GetLocalIp();
             ReadConfig();
-
-            // Testing on windows
-            if (!DeviceTypeInformation.IsRaspberryPi)
-            {
-                Ini.access_token = "Atza|IQEBLjAsAhQ6BTrn8WaER8D7UfrxpvZTCRN-UAIUNMsUtWH2ZBYTiDlIK5u8gkEnL834iGhqhhJCHBbabHjl2T79FmWjsEFcdltTHHh6AEd4FgMe1wX7ipDhQN97T5C76fBUmQxRDYs2DOFblSr3eGQEJO0UgIHPPOmqOCrqANUUpQRdkcqvbUzOAH3hfxueci_zP3HdE7d3CJ19r-E7t-OhxoKMi9xqsgKcD1b3Th6xb4ZDtPf7aqHe8QorO1ZOqjzm91MRQPKG2KZjwTYy7TbZ8wfO5UCLb239xCCwMn_2FTrJfZP1sT25SWoqcVsKRYB-WYKYrx4RiEeGzWwJWKg9Ip5iTZnnX1n22l9uet_WANmBsZUHtx8ByeIvU3IVpLfrOt4Ng9Of5wVY2ETegznJuFRZoyy4X3JYIA2gKJ1dcTgV31xSWsCBWTL32R8U8yGdAy3ODc8UXq56yS_OHwdOQ98VmaKUTVN0ezq6H2AmBzt1POvvcJMYWPIvD0vjl9wkUzP-71flwRugyeeImD7h_4_JZ5UJug3u_VKlAul71H38D62JSVeYRJ41RkRM3spF";
-            }
 
             try
             {
@@ -68,9 +64,6 @@ namespace AlexaIOT
                 status.Text = "Not running";
                 status.Foreground = new SolidColorBrush(Colors.Red);
             }
-
-            /// JSON Parse response test.
-            /// {"messageHeader":{},"messageBody":{"directives":[{"namespace":"SpeechSynthesizer","name":"speak","payload":{"contentIdentifier":"amzn1.as-ct.v1.Domain:Application:Music#ACRI#DeviceTTSRendererV4_0eb7a138-1870-42dc-bcb8-86145318117e","audioContent":"cid:DeviceTTSRendererV4_0eb7a138-1870-42dc-bcb8-86145318117e_1191296483"}}]}}
         }
 
         public async Task Hello()
@@ -113,8 +106,6 @@ namespace AlexaIOT
 
             isListening = true;
             await speechRecognizer.ContinuousRecognitionSession.StartAsync();
-
-            timer = new Timer(timerCallback, null, TimeSpan.FromSeconds(20).Milliseconds, Timeout.Infinite);
         }
 
         private async void UpdateTextbox()
@@ -141,13 +132,7 @@ namespace AlexaIOT
             await Ini.ReadConfig();
         }
 
-        private async void timerCallback(object state)
-        {
-            // do some work not connected with UI
-            string result = await server.GetToken(true);
-        }
-
-        private async void toggleButton_Click(object sender, RoutedEventArgs e)
+        private void toggleButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -281,7 +266,7 @@ namespace AlexaIOT
         /// </summary>
         /// <param name="sender">The recognizer that has generated the hypothesis</param>
         /// <param name="args">The hypothesis formed</param>
-        private async void SpeechRecognizer_HypothesisGenerated(SpeechRecognizer sender, SpeechRecognitionHypothesisGeneratedEventArgs args)
+        private void SpeechRecognizer_HypothesisGenerated(SpeechRecognizer sender, SpeechRecognitionHypothesisGeneratedEventArgs args)
         {
             string hypothesis = args.Hypothesis.Text;
         }

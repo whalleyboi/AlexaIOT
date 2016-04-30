@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
@@ -22,10 +23,8 @@ namespace AlexaIOT
 
         StreamSocketListener listener = new StreamSocketListener();
 
-        public async void Start()
+        public void Start()
         {
-            
-            //await listener.BindServiceNameAsync("5000");
             listener.BindEndpointAsync(new HostName(Ini.IPAddress), "5000").AsTask().Wait();
             listener.ConnectionReceived += Listener_ConnectionReceived;
         }
@@ -33,7 +32,6 @@ namespace AlexaIOT
         public async void Stop()
         {
             await listener.CancelIOAsync();
-            
             listener.Dispose();
         }
 
@@ -110,8 +108,6 @@ namespace AlexaIOT
                             string text = reader.ReadToEnd();
                             text = text.Replace("{ProductID}", Ini.ProductID);
                             bodyArray = Encoding.UTF8.GetBytes(text);
-
-                            //bodyArray = Encoding.UTF8.GetBytes("<html><body><a href=\"" + url + "\">Authorize AlexIOT with Amazon</a> <br/> <IMPORTANT> Go to <a href=\"http://" + Ini.IPAddress + ":5000/setup\">Setup AlexaIOT</a> BEFORE you authorize</body></html>");
                         }
                         else if (isSetup)
                         {
@@ -312,6 +308,24 @@ SendRequest(byte[] audioData)
                     Debug.WriteLine(message.Content.ReadAsStringAsync().Result);
                 }
             }
+        }
+
+        public async Task<string> GetDirectives()
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Ini.access_token);
+            var response = await httpClient.GetAsync("https://access-alexa-na.amazon.com/v20160207/events");
+
+            //will throw an exception if not successful
+            response.EnsureSuccessStatusCode();
+
+            string content = await response.Content.ReadAsStringAsync();
+            return content;
+            //return await Task.Run(() => JsonObject.Parse(content));
+        }
+
+        private void ProccessRequest(string Response)
+        {
         }
 
         public static string GetLocalIp()
