@@ -10,7 +10,7 @@
     <PackageArchitecture>x86</PackageArchitecture>
     <PackageIdentityName>449485e6-19ea-43a9-8c54-176cde10d41a</PackageIdentityName>
     <IntermediateOutputPath>E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\obj\x86\Debug\</IntermediateOutputPath>
-    <RegisteredManifestChecksum>6EB485B93C8F20909A03DC032B897E1EC3721139C706498998111AF87AB0B88D</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>9AFEE7067A99D6479A058B19EE8DB2511E275EC42E016CFF84F035347B09C2FB</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>AlexaIOT_1.0.0.0_x86__jzy9kz7rn89y4</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>AlexaIOT_jzy9kz7rn89y4!App</RegisteredUserModeAppID>
     <RegisteredPackageID>AlexaIOT</RegisteredPackageID>
@@ -22,13 +22,13 @@
     <AppXManifest Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-04-30T05:13:36.723</Modified>
+      <Modified>2016-04-30T06:57:22.289</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\App1.exe">
-      <PackagePath>entrypoint\App1.exe</PackagePath>
-      <Modified>2016-04-30T05:13:36.573</Modified>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\AlexaIOT.exe">
+      <PackagePath>entrypoint\AlexaIOT.exe</PackagePath>
+      <Modified>2016-04-30T06:57:22.149</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\trevo_000\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -555,9 +555,9 @@
       <PackagePath>Properties\Default.rd.xml</PackagePath>
       <Modified>2016-04-30T03:19:18.958</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\App1.xr.xml">
-      <PackagePath>App1.xr.xml</PackagePath>
-      <Modified>2016-04-30T03:19:21.767</Modified>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\AlexaIOT.xr.xml">
+      <PackagePath>AlexaIOT.xr.xml</PackagePath>
+      <Modified>2016-04-30T05:22:34.127</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -565,11 +565,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-04-30T04:52:15.775</Modified>
+      <Modified>2016-04-30T05:27:19.981</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\Core\App1.exe">
-      <PackagePath>App1.exe</PackagePath>
-      <Modified>2016-04-30T05:13:36.722</Modified>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\x86\Debug\Core\AlexaIOT.exe">
+      <PackagePath>AlexaIOT.exe</PackagePath>
+      <Modified>2016-04-30T06:57:22.288</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

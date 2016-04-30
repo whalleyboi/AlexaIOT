@@ -22,7 +22,7 @@
     <Resource Language="EN-US" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="App1.exe" EntryPoint="AlexaIOT.App">
+    <Application Id="App" Executable="AlexaIOT.exe" EntryPoint="AlexaIOT.App">
       <uap:VisualElements DisplayName="AlexaIOT" Square150x150Logo="Assets\Wide310x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Amazon Alexa on Windows IOT" BackgroundColor="black">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="AlexaIOT"></uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="black" />

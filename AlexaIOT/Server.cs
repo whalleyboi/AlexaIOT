@@ -224,6 +224,11 @@ namespace AlexaIOT
             await args.Socket.CancelIOAsync();
         }
 
+        internal string GetToken()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<string> GetToken(bool refresh)
         {
 
@@ -254,7 +259,6 @@ namespace AlexaIOT
                         }
                     }
                 }
-
                 return access_token;
             }
             else if (!String.IsNullOrEmpty(Ini.access_token))
@@ -267,11 +271,9 @@ namespace AlexaIOT
             }
         }
 
-        public async
-        Task
-SendRequest(byte[] audioData)
+        public async Task SendRequest(byte[] audioData)
         {
-                string alexaURL = "https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize";
+            string alexaURL = "https://access-alexa-na.amazon.com/v1/avs/speechrecognizer/recognize";
 
             using (var client = new HttpClient())
             {
@@ -288,7 +290,7 @@ SendRequest(byte[] audioData)
                     byteContant.Headers.Add("Content-Type", "application/octet-stream");
                     byteContant.Headers.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"audio\"");
                     content.Add(byteContant, "file", "audio");
-                    
+
                     HttpResponseMessage message = await client.PostAsync(alexaURL, content);
 
                     Stream streamResponse = await message.Content.ReadAsStreamAsync();

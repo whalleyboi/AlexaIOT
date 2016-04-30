@@ -9,17 +9,17 @@
     <SolutionConfiguration>Debug|ARM</SolutionConfiguration>
     <PackageArchitecture>arm</PackageArchitecture>
     <PackageIdentityName>449485e6-19ea-43a9-8c54-176cde10d41a</PackageIdentityName>
-    <IntermediateOutputPath>E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\obj\ARM\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\obj\ARM\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\bin\ARM\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\ARM\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\bin\ARM\Debug\App1.exe">
-      <PackagePath>entrypoint\App1.exe</PackagePath>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\ARM\Debug\AlexaIOT.exe">
+      <PackagePath>entrypoint\AlexaIOT.exe</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\trevo_000\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -339,95 +339,95 @@
     <AppxPackagedFile Include="C:\Users\trevo_000\.nuget\packages\System.Xml.XmlSerializer\4.0.10\lib\netcore50\System.Xml.XmlSerializer.dll">
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\ApplicationInsights.config">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\ApplicationInsights.config">
       <PackagePath>ApplicationInsights.config</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\beep.wav">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\beep.wav">
       <PackagePath>Assets\Audio\beep.wav</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\recording.wav">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\recording.wav">
       <PackagePath>Assets\Audio\recording.wav</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hello.wav">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hello.wav">
       <PackagePath>Assets\Audio\StartupHello\hello.wav</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hi.wav">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hi.wav">
       <PackagePath>Assets\Audio\StartupHello\hi.wav</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hithere.wav">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\StartupHello\hithere.wav">
       <PackagePath>Assets\Audio\StartupHello\hithere.wav</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Audio\response.mp3">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Audio\response.mp3">
       <PackagePath>Assets\Audio\response.mp3</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-100.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-100.png">
       <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-125.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-125.png">
       <PackagePath>Assets\SplashScreen.scale-125.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-150.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-150.png">
       <PackagePath>Assets\SplashScreen.scale-150.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-400.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-400.png">
       <PackagePath>Assets\SplashScreen.scale-400.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-100.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-100.png">
       <PackagePath>Assets\Square150x150Logo.scale-100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-150.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-150.png">
       <PackagePath>Assets\Square150x150Logo.scale-150.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-400.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-400.png">
       <PackagePath>Assets\Square150x150Logo.scale-400.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Assets\Web\beta.html">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Assets\Web\beta.html">
       <PackagePath>Assets\Web\beta.html</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\bin\ARM\Debug\App1.xr.xml">
-      <PackagePath>App1.xr.xml</PackagePath>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\ARM\Debug\AlexaIOT.xr.xml">
+      <PackagePath>AlexaIOT.xr.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\bin\ARM\Debug\resources.pri">
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\ARM\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\Visual Studio 2015\Projects\AlexaIOT\AlexaIOT\bin\ARM\Debug\Core\App1.exe">
-      <PackagePath>App1.exe</PackagePath>
+    <AppxPackagedFile Include="E:\Users\trevo_000\Documents\GitHub\AlexaIOT\AlexaIOT\bin\ARM\Debug\Core\AlexaIOT.exe">
+      <PackagePath>AlexaIOT.exe</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

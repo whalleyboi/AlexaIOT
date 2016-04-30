@@ -33,7 +33,7 @@ namespace AlexaIOT
         // dispatcher, so we can update the UI in a thread-safe manner.
         private CoreDispatcher dispatcher;
 
-        API2 api2 = new API2();
+        API2 api2;
 
         public MainPage()
         {
@@ -103,6 +103,9 @@ namespace AlexaIOT
             await Hello();
 
             await InitializeRecognizer(SpeechRecognizer.SystemSpeechLanguage);
+
+            await server.GetToken(true);
+            //api2 = new API2();
 
             isListening = true;
             await speechRecognizer.ContinuousRecognitionSession.StartAsync();

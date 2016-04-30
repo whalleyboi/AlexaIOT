@@ -56,8 +56,6 @@ namespace AlexaIOT
             {
                 if (i != devices.Count)
                 {
-                    Debug.WriteLine(devices[i].Name);
-
                     if (DeviceTypeInformation.IsRaspberryPi)
                     {
                         if (devices[i].Name == "Speakers (Raspberry Pi 2 audio)")
