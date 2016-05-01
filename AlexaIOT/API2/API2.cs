@@ -40,32 +40,6 @@ namespace AlexaIOT
             eventsURL = new Uri(apiEndpoint, "/" + APIVERSION + "/events");
             directivesURL = new Uri(apiEndpoint, "/" + APIVERSION + "/directives");
             pingURL = new Uri(apiEndpoint, "/" + APIVERSION + "/ping");
-
-            //CreateConnections();
-        }
-
-        // Failed attempt at creating Downchannel for events..
-        public async void CreateConnections()
-        {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                await CreatePOSTConnection();
-
-                if (eventsResponse.IsSuccessStatusCode)
-                {
-                    //Debug.WriteLine("POST Success code + " + eventsResponse.Content.ReadAsStringAsync().Result);
-                }
-            });
-
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                await CreateGETConnection();
-
-                if (getResponse.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("Success code");
-                }
-            });
         }
 
         public async Task CreateGETConnection()
@@ -147,19 +121,15 @@ namespace AlexaIOT
                                         double timeOut = 8000; // Default
                                         string timeOuts = Ini.GetStringInBetween("\"timeoutInMilliseconds\":", "}}}", line, false, false);
                                         Double.TryParse(timeOuts, out timeOut);
-                                        Debug.WriteLine("Open mic for " + timeOut + "ms");
                                     }
                                 }
-                                else if (line.Contains("\"name\":\"Play\"")) // Open mic and record
+                                else if (line.Contains("\"name\":\"Play\"")) // Play radio
                                 {
-                                    //},"url":"
                                     audioURL = Ini.GetStringInBetween("},\"url\":\"", "\",\"token\"", line, false, false);
                                     playURL = true;
                                 }
                             }
                         }
-
-                        //Debug.WriteLine(message.Content.ReadAsStringAsync().Result);
                     }
                     catch (Exception e)
                     {
@@ -175,10 +145,10 @@ namespace AlexaIOT
             if (expectSpeech)
             {
                 Audio.fileInput.FileCompleted -= FileInput_FileCompleted;
-                Audio.StartRecord();
+                await Audio.StartRecord();
                 Debug.WriteLine("Start Record expectSpeech");
                 Task.Delay(TimeSpan.FromMilliseconds(8000)).Wait();
-                Audio.StopRecord();
+                await Audio.StopRecord();
                 Debug.WriteLine("Stop Record expectSpeech");
                 expectSpeech = false;
             } else if (playURL)

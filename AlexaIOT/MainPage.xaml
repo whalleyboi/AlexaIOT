@@ -2,7 +2,7 @@
     x:Class="AlexaIOT.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:App1"
+    xmlns:local="using:AlexaIOT"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -11,23 +11,23 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,0,-463,0">
         <Grid>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Server Status: " VerticalAlignment="Top"/>
-            <TextBlock x:Name="status" HorizontalAlignment="Left" Margin="104,10,0,0" TextWrapping="Wrap" Text="Not running" VerticalAlignment="Top" Foreground="#FFFF0101"/>
+            <TextBlock x:Name="status" HorizontalAlignment="Left" Margin="153,10,0,0" TextWrapping="Wrap" Text="Not running" VerticalAlignment="Top" Foreground="#FFFF0101"/>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" Text="Setup AlexaIOT" VerticalAlignment="Top" FontWeight="Bold" FontSize="17.333"/>
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,109,0,0" TextWrapping="Wrap" Text="ProductID" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,146,0,0" TextWrapping="Wrap" Text="Security_Profile_Description" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="10,184,0,0" TextWrapping="Wrap" Text="Security_Profile_ID" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="10,221,0,0" TextWrapping="Wrap" Text="Client_ID" VerticalAlignment="Top" ToolTipService.ToolTip=""/>
             <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,259,0,0" TextWrapping="Wrap" Text="Client_Secret" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="199,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="263" ToolTipService.ToolTip="ProductID" PlaceholderText="ProductID"/>
-            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="199,134,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="263" ToolTipService.ToolTip="Security_Profile_Description" PlaceholderText="Security_Profile_Description"/>
-            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="199,172,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="263" ToolTipService.ToolTip="Security_Profile_ID" PlaceholderText="Security_Profile_ID"/>
-            <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Margin="199,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="263" ToolTipService.ToolTip="Client_ID" PlaceholderText="Client_ID"/>
-            <TextBox x:Name="textBox_Copy3" HorizontalAlignment="Left" Margin="199,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="263" ToolTipService.ToolTip="Client_Secret" PlaceholderText="Client_Secret"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="199,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="572" ToolTipService.ToolTip="ProductID" PlaceholderText="ProductID"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="199,134,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="572" ToolTipService.ToolTip="Security_Profile_Description" PlaceholderText="Security_Profile_Description"/>
+            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="199,172,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="572" ToolTipService.ToolTip="Security_Profile_ID" PlaceholderText="Security_Profile_ID"/>
+            <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Margin="199,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="572" ToolTipService.ToolTip="Client_ID" PlaceholderText="Client_ID"/>
+            <TextBox x:Name="textBox_Copy3" HorizontalAlignment="Left" Margin="199,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="5" Width="572" ToolTipService.ToolTip="Client_Secret" PlaceholderText="Client_Secret"/>
             <Button x:Name="button" Content="Save Settings" HorizontalAlignment="Left" Margin="10,306,0,0" VerticalAlignment="Top" Click="button_Click"/>
-            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="10,380,0,0" TextWrapping="Wrap" Text="Record for Alexa" VerticalAlignment="Top" FontWeight="Bold" FontSize="17.333"/>
-            <ToggleButton x:Name="toggleButton" Content="Record Audio" HorizontalAlignment="Left" Margin="10,408,0,0" VerticalAlignment="Top" ClickMode="Press" Click="toggleButton_Click"/>
-            <Button x:Name="button1" Content="Play Recording" HorizontalAlignment="Left" Margin="199,408,0,0" VerticalAlignment="Top" Width="145" Click="button1_Click"/>
-            <Button x:Name="button2" Content="Send Request" HorizontalAlignment="Left" Margin="10,502,0,0" VerticalAlignment="Top" Width="122" Click="button2_Click"/>
+            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" Margin="10,380,0,0" TextWrapping="Wrap" Text="Send to Alexa" VerticalAlignment="Top" FontWeight="Bold" FontSize="17.333"/>
+            <Button x:Name="button2" Content="Send Request" HorizontalAlignment="Left" Margin="10,443,0,0" VerticalAlignment="Top" Width="122" Click="button2_Click"/>
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="10,418,0,0" TextWrapping="Wrap" Text="Recording Status: " VerticalAlignment="Top"/>
+            <TextBlock x:Name="status_Copy" HorizontalAlignment="Left" Margin="153,418,0,0" TextWrapping="Wrap" Text="Not recording" VerticalAlignment="Top" Foreground="#FFFF0101"/>
         </Grid>
     </Grid>
 </Page>

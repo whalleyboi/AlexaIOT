@@ -20,6 +20,8 @@ namespace AlexaIOT
         public delegate void IniChangeEventHandler(string key, EventArgs e);
         public static event IniChangeEventHandler IniChanged;
 
+        private static StorageFile resultfile;
+
         public static string ProductID
         {
             get
@@ -134,15 +136,17 @@ namespace AlexaIOT
 
         public static async Task WriteConfig()
         {
-            StorageFile resultfile;
-
-            if (DeviceTypeInformation.IsRaspberryPi)
+            if (resultfile == null)
             {
-                var folders = await KnownFolders.RemovableDevices.GetFoldersAsync();
-                resultfile = await folders[2].CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
-            } else
-            {
-                resultfile = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                if (DeviceTypeInformation.IsRaspberryPi)
+                {
+                    var folders = await KnownFolders.RemovableDevices.GetFoldersAsync();
+                    resultfile = await folders[2].CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                }
+                else
+                {
+                    resultfile = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                }
             }
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -187,38 +191,51 @@ namespace AlexaIOT
 
         public static async Task ReadConfig()
         {
-            StorageFile resultfile;
-
-            if (DeviceTypeInformation.IsRaspberryPi)
+            if (resultfile == null)
             {
-                var folders = await KnownFolders.RemovableDevices.GetFoldersAsync();
-                resultfile = await folders[2].CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
-            }
-            else
-            {
-                resultfile = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                if (DeviceTypeInformation.IsRaspberryPi)
+                {
+                    var folders = await KnownFolders.RemovableDevices.GetFoldersAsync();
+                    resultfile = await folders[2].CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                }
+                else
+                {
+                    resultfile = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync("Config.xml", CreationCollisionOption.OpenIfExists);
+                }
             }
 
 
             string text = await Windows.Storage.FileIO.ReadTextAsync(resultfile);
 
-                string ProductID = GetStringInBetween("<ProductID>", "</ProductID>", text, false, false);
-                Ini.ProductID = ProductID;
+            string ProductID = GetStringInBetween("<ProductID>", "</ProductID>", text, false, false);
+            Ini.ProductID = ProductID;
 
-                string Security_Profile_Description = GetStringInBetween("<Security_Profile_Description>", "</Security_Profile_Description>", text, false, false);
-                Ini.Security_Profile_Description = Security_Profile_Description;
+            string Security_Profile_Description = GetStringInBetween("<Security_Profile_Description>", "</Security_Profile_Description>", text, false, false);
+            Ini.Security_Profile_Description = Security_Profile_Description;
 
-                string Security_Profile_ID = GetStringInBetween("<Security_Profile_ID>", "</Security_Profile_ID>", text, false, false);
-                Ini.Security_Profile_ID = Security_Profile_ID;
+            string Security_Profile_ID = GetStringInBetween("<Security_Profile_ID>", "</Security_Profile_ID>", text, false, false);
+            Ini.Security_Profile_ID = Security_Profile_ID;
 
-                string Client_ID = GetStringInBetween("<Client_ID>", "</Client_ID>", text, false, false);
-                Ini.Client_ID = Client_ID;
+            string Client_ID = GetStringInBetween("<Client_ID>", "</Client_ID>", text, false, false);
+            Ini.Client_ID = Client_ID;
 
-                string Client_Secret = GetStringInBetween("<Client_Secret>", "</Client_Secret>", text, false, false);
-                Ini.Client_Secret = Client_Secret;
+            string Client_Secret = GetStringInBetween("<Client_Secret>", "</Client_Secret>", text, false, false);
+            Ini.Client_Secret = Client_Secret;
 
-                string refresh_token = GetStringInBetween("<refresh_token>", "</refresh_token>", text, false, false);
-                Ini.refresh_token = refresh_token;
+            string refresh_token = GetStringInBetween("<refresh_token>", "</refresh_token>", text, false, false);
+            Ini.refresh_token = refresh_token;
+        }
+
+        // Reserved for Alarms
+        public static async Task WriteAlarms()
+        {
+
+        }
+
+        // Reserved for Alarms
+        public static async Task ReadAlarms()
+        {
+
         }
 
         public static string toString()

@@ -2,17 +2,18 @@
 
 Features::
 
- * Very basic Alexa authorization protocol (API V1)
+ * Voice activation - Say Hello or Alexa to activate her
+ * Very basic Alexa authorization protocol (API V1) and about 15% API v20160207 (API2)
  * Basic response handling
  * Audio player / Audio recorder
  * Badly written code <- My treat!
 
 TODO::
 
- * Upgrade to API v20160207 FOR Improved reponse handling for more complex request.
+ * Upgrade to API v20160207 FOR Improved reponse handling for more complex request. - STARTED
  * GPIO examples - Waiting for my equipment to arrive
- * Skills support
- * Alarms support
+ * Skills support - STARTED
+ * Alarms support - STARTED
 
 
 ### **If you are going to use any of this code please help us improve by adding your own additions!**

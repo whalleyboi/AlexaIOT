@@ -99,18 +99,21 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API2.cs" />
+    <Compile Include="API2\API2.cs" />
+    <Compile Include="API2\Context.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Audio.cs" />
     <Compile Include="Utils\DeviceInfo.cs" />
+    <Compile Include="Utils\FileStorageAdapater.cs" />
     <Compile Include="Utils\Ini.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Utils\SocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -230,8 +230,6 @@ namespace AlexaIOT
 
         public async Task<string> GetToken(bool refresh)
         {
-
-            Debug.WriteLine("Called: GetToken()");
             if (refresh)
             {
                 var requestContent = new FormUrlEncodedContent(new[] {
@@ -304,7 +302,7 @@ namespace AlexaIOT
 
                     StorageFile file = await KnownFolders.MusicLibrary.CreateFileAsync("response.wav", CreationCollisionOption.ReplaceExisting);
                     await Windows.Storage.FileIO.WriteBytesAsync(file, memStream.ToArray());
-                    Audio.PlayAudio(file);
+                    await Audio.PlayAudio(file);
 
                     Debug.WriteLine(message.Content.ReadAsStringAsync().Result);
                 }
