@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Audio;
@@ -15,7 +16,7 @@ namespace AlexaIOT
         private static AudioGraph audioflow;
         private static AudioDeviceOutputNode deviceOuput;
         private static AudioGraphSettings settings;
-        private static AudioFileInputNode fileInput;
+        public static AudioFileInputNode fileInput;
 
         private static bool _isRecording = false;
         private static bool _isAudioPlaying = false;
@@ -92,7 +93,7 @@ namespace AlexaIOT
             catch { }
         }
 
-        public static async void PlayAudio(StorageFile file)
+        public static async Task PlayAudio(StorageFile file)
         {
             IsAudioPlaying = true;
             CreateAudioFileInputNodeResult fileInputResult = await audioflow.CreateFileInputNodeAsync(file);
@@ -100,6 +101,13 @@ namespace AlexaIOT
             {
                 // Cannot read input file
                 Debug.WriteLine(String.Format("Cannot read input file because {0}", fileInputResult.Status.ToString()));
+                IsAudioPlaying = false;
+                return;
+            }
+
+            if (!IsAudioPlaying)
+            {
+                Debug.WriteLine("Error detected!");
                 return;
             }
 
@@ -111,7 +119,6 @@ namespace AlexaIOT
                 Debug.WriteLine(e.ToString());
             }
             fileInput.StartTime = TimeSpan.FromSeconds(0);
-
             audioflow.Start();
             IsAudioPlaying = false;
         }
@@ -121,7 +128,7 @@ namespace AlexaIOT
             if (!IsRecording)
             {
                 IsAudioPlaying = true;
-                Audio.PlayAudio(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav")));
+                await Audio.PlayAudio(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav")));
                 IsAudioPlaying = false;
 
                 IsRecording = true;
@@ -135,6 +142,7 @@ namespace AlexaIOT
                 recordProfile.Audio.SampleRate = 16000;
 
                 await _mediaCapture.StartRecordToStorageFileAsync(recordProfile, recordStorageFile);
+                recordStorageFile = null;
             }
         }
 
@@ -147,7 +155,7 @@ namespace AlexaIOT
                 await _mediaCapture.StopRecordAsync();
 
                 IsAudioPlaying = true;
-                Audio.PlayAudio(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav")));
+                await Audio.PlayAudio(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav")));
                 IsAudioPlaying = false;
             }
         }

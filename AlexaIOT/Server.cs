@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
@@ -324,10 +323,6 @@ namespace AlexaIOT
             string content = await response.Content.ReadAsStringAsync();
             return content;
             //return await Task.Run(() => JsonObject.Parse(content));
-        }
-
-        private void ProccessRequest(string Response)
-        {
         }
 
         public static string GetLocalIp()

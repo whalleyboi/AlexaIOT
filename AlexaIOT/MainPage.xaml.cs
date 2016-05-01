@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Globalization;
 using Windows.Media.Capture;
-using Windows.Media.Playback;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
 using Windows.UI;
@@ -20,8 +18,6 @@ namespace AlexaIOT
     {
         Server server;
         private MediaCapture _mediaCapture;
-        MediaPlayer player = BackgroundMediaPlayer.Current;
-        MediaElement mysong = new MediaElement();
 
         // The speech recognizer used throughout this sample.
         private SpeechRecognizer speechRecognizer;
@@ -29,11 +25,12 @@ namespace AlexaIOT
         // Keep track of whether the continuous recognizer is currently running, so it can be cleaned up appropriately.
         public bool isListening = false;
 
-        // Speech events may come in on a thread other than the UI thread, keep track of the UI thread's
-        // dispatcher, so we can update the UI in a thread-safe manner.
         private CoreDispatcher dispatcher;
 
         API2 api2;
+        public bool enableAPI2 = true; // Im honestly going to need help with this one..
+
+        StorageFile recordingFile;
 
         public MainPage()
         {
@@ -78,10 +75,14 @@ namespace AlexaIOT
             else if (randomNumber == 1)
             {
                 file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/StartupHello/hi.wav"));
-            } else
+            }
+            else
             {
                 file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/StartupHello/hithere.wav"));
             }
+
+            recordingFile = await KnownFolders.MusicLibrary.GetFileAsync("recording.wav");
+
             Audio.PlayAudio(file);
         }
 
@@ -105,7 +106,11 @@ namespace AlexaIOT
             await InitializeRecognizer(SpeechRecognizer.SystemSpeechLanguage);
 
             await server.GetToken(true);
-            //api2 = new API2();
+
+            if (enableAPI2)
+            {
+                api2 = new API2();
+            }
 
             isListening = true;
             await speechRecognizer.ContinuousRecognitionSession.StartAsync();
@@ -139,7 +144,7 @@ namespace AlexaIOT
         {
             try
             {
-                if (toggleButton.Content.ToString() == "Record Audio")
+                if (toggleButton.Content.ToString() == "Record Audio" && !Audio.IsRecording)
                 {
                     toggleButton.Content = "Stop Recording";
 
@@ -163,26 +168,33 @@ namespace AlexaIOT
             {
                 button1.Content = "Stop Playing";
 
-                StorageFile file = await KnownFolders.MusicLibrary.GetFileAsync("recording.wav");
-                Audio.PlayAudio(file);
+                await Audio.PlayAudio(recordingFile);
             }
             else
             {
                 button1.Content = "Play Recording";
-                mysong.Pause();
             }
         }
 
         private async void button2_Click(object sender, RoutedEventArgs e)
         {
-            StorageFile file = await KnownFolders.MusicLibrary.GetFileAsync("recording.wav");
-            Stream stream = await file.OpenStreamForReadAsync();
+            Stream stream = await recordingFile.OpenStreamForReadAsync();
             using (MemoryStream ms = new MemoryStream())
             {
                 stream.CopyTo(ms);
                 Debug.WriteLine("Audio byte size - " + ms.Length);
-                await server.SendRequest(ms.ToArray());
+                if (ms.Length >= 10000)
+                {
+                    if (enableAPI2)
+                    {
+                        await api2.SendRequest(ms.ToArray());
+                    }
+                    else {
+                        await server.SendRequest(ms.ToArray());
+                    }
+                }
             }
+            stream.Dispose();
         }
 
         /// <summary>
@@ -210,7 +222,7 @@ namespace AlexaIOT
             // Provide feedback to the user about the state of the recognizer. This can be used to provide visual feedback in the form
             // of an audio indicator to help the user understand whether they're being heard.
             speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
-        
+
             // Apply the dictation topic constraint to optimize for dictated freeform speech.
             var dictationConstraint = new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "dictation");
             speechRecognizer.Constraints.Add(dictationConstraint);
@@ -334,20 +346,17 @@ namespace AlexaIOT
         /// <param name="args">The current state of the recognizer.</param>
         private async void SpeechRecognizer_StateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
         {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal,() =>
+              {
 
-                if (args.State.ToString() == "SoundEnded")
-                {
-                    if (Audio.IsRecording)
-                    {
-                        Audio.StopRecord();
-                    }
-                }
-
-                //Debug.WriteLine(args.State.ToString());
-            });
+                  if (args.State.ToString() == "SoundEnded")
+                  {
+                      if (Audio.IsRecording)
+                      {
+                          Audio.StopRecord();
+                      }
+                  }
+              });
         }
-
     }
 }
