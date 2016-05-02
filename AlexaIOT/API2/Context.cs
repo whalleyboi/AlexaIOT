@@ -13,41 +13,7 @@ namespace AlexaIOT
     {
         public static string GetDeviceContext()
         {
-            ContextJSON json = new ContextJSON();
             return null;
         }
-    }
-
-    [DataContract]
-    internal class ContextJSON
-    {
-        [DataMember]
-        internal string context = "context";
-
-        [DataMember]
-        internal Header[] header;
-    }
-
-    [DataContract]
-    internal class Header
-    {
-        [DataMember]
-        internal string Namespace;
-
-        [DataMember]
-        internal string name;
-
-        [DataMember]
-        internal string messageId;
-
-        [DataMember]
-        internal string dialogRequestId;
-    }
-
-    [DataContract]
-    internal class Payload
-    {
-        [DataMember]
-        internal string name;
     }
 }

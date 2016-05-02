@@ -7,6 +7,7 @@ using Windows.Globalization;
 using Windows.Media.Capture;
 using Windows.Media.SpeechRecognition;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -29,7 +30,7 @@ namespace AlexaIOT
         private CoreDispatcher dispatcher;
 
         API2 api2;
-        public bool enableAPI2 = false; // Im honestly going to need help with this one..
+        public bool enableAPI2 = true; // Im honestly going to need help with this one..
 
         StorageFile recordingFile;
 
@@ -130,20 +131,18 @@ namespace AlexaIOT
 
         private async void button2_Click(object sender, RoutedEventArgs e)
         {
-            Stream stream = await recordingFile.OpenStreamForReadAsync();
             using (MemoryStream ms = new MemoryStream())
             {
-                stream.CopyTo(ms);
-                Debug.WriteLine("Audio byte size - " + ms.Length);
+                //stream.CopyTo(ms);
+                Debug.WriteLine("Audio byte size - " +Audio.str.Length);
                 if (enableAPI2)
                 {
-                    await api2.SendRequest(ms.ToArray());
+                    await api2.SendRequest(Audio.str.ToArray());
                 }
                 else {
-                    await server.SendRequest(ms.ToArray());
+                    await server.SendRequest(Audio.str.ToArray());
                 }
             }
-            stream.Dispose();
         }
 
         /// <summary>
@@ -165,7 +164,8 @@ namespace AlexaIOT
             }
 
             this.speechRecognizer = new SpeechRecognizer(recognizerLanguage);
-            speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(15, 0, 0, 0);
+            speechRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(0, 0, 0, 8);
+            speechRecognizer.Timeouts.BabbleTimeout = new TimeSpan(0, 0, 0, 3);
 
             speechRecognizer.StateChanged += SpeechRecognizer_StateChanged;
 
@@ -197,13 +197,6 @@ namespace AlexaIOT
                         await speechRecognizer.ContinuousRecognitionSession.StartAsync();
                     });
                 }
-                else
-                {
-                    await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        isListening = false;
-                    });
-                }
             }
         }
 
@@ -216,24 +209,22 @@ namespace AlexaIOT
         /// <param name="args">Details about the recognized speech</param>
         private async void ContinuousRecognitionSession_ResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                if (args.Result.Confidence == SpeechRecognitionConfidence.Medium || args.Result.Confidence == SpeechRecognitionConfidence.High)
-                {
-                    if (!Audio.IsRecording)
-                    {
-                        if (args.Result.Text.ToLower() == "hello." || args.Result.Text.ToLower() == "alexa.")
-                        {
-                            Audio.StartRecord();
-                            status_Copy.Text = "Recording!";
-                            status_Copy.Foreground = new SolidColorBrush(Colors.Green);
-                        }
-                    }
-                }
-            });
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+             {
+                 if (args.Result.Confidence == SpeechRecognitionConfidence.Medium || args.Result.Confidence == SpeechRecognitionConfidence.High)
+                 {
+                     if (!Audio.IsRecording)
+                     {
+                         if (args.Result.Text.ToLower() == "hello." || args.Result.Text.ToLower() == "alexa.")
+                         {
+                             Audio.StartRecord();
+                             status_Copy.Text = "Recording!";
+                             status_Copy.Foreground = new SolidColorBrush(Colors.Green);
+                         }
+                     }
+                 }
+             });
         }
-
-        SemaphoreSlim _mutex = new SemaphoreSlim(1);
 
         /// <summary>
         /// Provide feedback to the user based on whether the recognizer is receiving their voice input.
@@ -242,18 +233,23 @@ namespace AlexaIOT
         /// <param name="args">The current state of the recognizer.</param>
         private async void SpeechRecognizer_StateChanged(SpeechRecognizer sender, SpeechRecognizerStateChangedEventArgs args)
         {
-            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-               {
-                   if (args.State.ToString() == "SoundEnded")
-                   {
-                       if (Audio.IsRecording)
-                       {
-                           Audio.StopRecord();
-                           status_Copy.Text = "Not recording";
-                           status_Copy.Foreground = new SolidColorBrush(Colors.Red);
-                       }
-                   }
-               });
+            try {
+                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        if (args.State.ToString() == "SoundEnded")
+                        {
+                            if (Audio.IsRecording)
+                            {
+                                Audio.StopRecord();
+                                status_Copy.Text = "Not recording";
+                                status_Copy.Foreground = new SolidColorBrush(Colors.Red);
+                            }
+                        }
+                    });
+            } catch
+            {
+                Debug.WriteLine("Error in stateChange");
+            }
         }
     }
 }

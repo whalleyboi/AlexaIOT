@@ -26,6 +26,8 @@ namespace AlexaIOT
         private static StorageFile recordStorageFile = null;
         private static StorageFile beep = null;
 
+        public static MemoryStream str = new MemoryStream();
+
         public static bool IsRecording
         {
             get
@@ -52,6 +54,11 @@ namespace AlexaIOT
 
         public static async Task AudioDevices()
         {
+            if (beep == null)
+            {
+                beep = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav"));
+            }
+
             DeviceInformationCollection devices = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(Windows.Media.Devices.MediaDevice.GetAudioRenderSelector());
             DeviceInformation selectedDevice = null;
 
@@ -91,6 +98,7 @@ namespace AlexaIOT
             {
                 _mediaCapture = new MediaCapture();
                 await _mediaCapture.InitializeAsync();
+                _mediaCapture.Failed += _mediaCapture_Failed;
                 _mediaCapture.AudioDeviceController.VolumePercent = 0.75f;
             }
             catch {
@@ -98,14 +106,14 @@ namespace AlexaIOT
             }
         }
 
+        private static void _mediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
+        {
+            Debug.WriteLine(errorEventArgs.Message);
+        }
+
         public static async Task PlayAudio(StorageFile file)
         {
             await AudioDevices();
-
-            if (beep == null)
-            {
-                beep = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Audio/beep.wav"));
-            }
 
             _isAudioPlaying = true;
             CreateAudioFileInputNodeResult fileInputResult = await audioflow.CreateFileInputNodeAsync(file);
@@ -160,7 +168,14 @@ namespace AlexaIOT
                 recordProfile.Audio.ChannelCount = 1;
                 recordProfile.Audio.SampleRate = 16000;
 
-                await _mediaCapture.StartRecordToStorageFileAsync(recordProfile, recordStorageFile);
+                try {
+                    await str.FlushAsync();
+                    await _mediaCapture.StartRecordToStreamAsync(recordProfile, str.AsRandomAccessStream());
+                } catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                }
+                //await _mediaCapture.StartRecordToStorageFileAsync(recordProfile, recordStorageFile);
                 recordStorageFile = null;
             }
         }

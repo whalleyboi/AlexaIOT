@@ -301,10 +301,8 @@ namespace AlexaIOT
                     memStream.Position = 0;
 
                     StorageFile file = await KnownFolders.MusicLibrary.CreateFileAsync("response.wav", CreationCollisionOption.ReplaceExisting);
-                    await Windows.Storage.FileIO.WriteBytesAsync(file, memStream.ToArray());
+                    await FileIO.WriteBytesAsync(file, memStream.ToArray());
                     await Audio.PlayAudio(file);
-
-                    Debug.WriteLine(message.Content.ReadAsStringAsync().Result);
                 }
             }
         }
@@ -320,7 +318,6 @@ namespace AlexaIOT
 
             string content = await response.Content.ReadAsStringAsync();
             return content;
-            //return await Task.Run(() => JsonObject.Parse(content));
         }
 
         public static string GetLocalIp()

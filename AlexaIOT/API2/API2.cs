@@ -1,10 +1,14 @@
-﻿using System;
+﻿using AlexaIOT.Utils;
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.Web.Http;
 
 namespace AlexaIOT
 {
@@ -19,20 +23,10 @@ namespace AlexaIOT
 
         // endpoint https://avs-alexa-na.amazon.com
 
-
-        public HttpClient directivesClient = new HttpClient();
-        public HttpClient pingClient = new HttpClient();
-        public HttpClient eventsClient = new HttpClient();
-
-        public HttpResponseMessage eventsResponse = null;
-        public HttpResponseMessage getResponse = null;
-
         private CoreDispatcher dispatcher;
 
         private bool expectSpeech = false;
-        private bool isSpkeaing = false;
         private bool playURL = false;
-        string audioURL = "";
 
         public API2()
         {
@@ -40,35 +34,72 @@ namespace AlexaIOT
             eventsURL = new Uri(apiEndpoint, "/" + APIVERSION + "/events");
             directivesURL = new Uri(apiEndpoint, "/" + APIVERSION + "/directives");
             pingURL = new Uri(apiEndpoint, "/" + APIVERSION + "/ping");
+
+            CreateDownchannel();
         }
 
-        public async Task CreateGETConnection()
+        /// <summary>
+        /// GET for establishing the downchannel using the directives path
+        /// Refer
+        /// </summary>
+        public async void CreateDownchannel()
         {
-            directivesClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Ini.access_token);
-            getResponse = await directivesClient.GetAsync(directivesURL);
+            using (System.Net.Http.HttpClient get = new System.Net.Http.HttpClient())
+            {
+                get.DefaultRequestHeaders.Add("Authorization", "Bearer " + Ini.access_token);
+                var response = await (get.GetAsync(directivesURL, System.Net.Http.HttpCompletionOption.ResponseHeadersRead));
+
+                var stream = await response.Content.ReadAsStreamAsync();
+                var buffer = new byte[2048];
+
+                while (await stream.ReadAsync(buffer, 0, buffer.Length) > 0)
+                {
+                    // Report progress and write to a different stream
+                    string directive = System.Text.Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+                    using (StringReader reader = new StringReader(directive))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.Contains("{\"directive\":{\""))
+                            {
+                                Directives.ParseDirective(line);
+                            }
+                        }
+                    }
+                    Array.Clear(buffer, 0, buffer.Length);
+                }
+            }
         }
 
+        /// <summary>
+        /// POST for all events sent to the Alexa Voice Service using the events path
+        /// Refer ro : https://developer.amazon.com/public/solutions/alexa/alexa-voice-service/docs/avs-http2-requests
+        /// </summary>
+        /// <returns></returns>
         public async Task CreatePOSTConnection()
         {
-            eventsClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Ini.access_token);
-            eventsClient.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+            Windows.Web.Http.HttpClient post = new Windows.Web.Http.HttpClient();
+            post.DefaultRequestHeaders.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Bearer", Ini.access_token);
+            post.DefaultRequestHeaders.Add("Keep-Alive", "true");
 
-            using (var content = new MultipartFormDataContent())
-            {
-                string json = "{\"event\":{\"header\":{\"namespace\":\"System\",\"name\":\"SynchronizeState\",\"messageId\":\"fakeMessageID\"},\"payload\":{}}}";
-                var stringContent = new StringContent(json);
-                stringContent.Headers.Add("Content-Disposition", "form-data; name=\"metadata\"");
-                content.Add(stringContent, "metadata");
+            var content = new Windows.Web.Http.HttpMultipartFormDataContent();
 
-                eventsResponse = await eventsClient.PostAsync(eventsURL, content);
-            }
+            string json = "{\"event\":{\"header\":{\"namespace\":\"System\",\"name\":\"SynchronizeState\",\"messageId\":\"fakeMessageID\"},\"payload\":{}}}";
+            var stringContent = new Windows.Web.Http.HttpStringContent(json);
+            stringContent.Headers.Add("Content-Disposition", "form-data; name=\"metadata\"");
+
+            content.Add(stringContent, "metadata");
+
+            Debug.WriteLine("Confirm just before POST");
+            var response = await (post.PostAsync(eventsURL, content));
         }
 
         public async Task SendRequest(byte[] audioData)
         {
             Debug.WriteLine("API2 - Send Request");
 
-            using (var client = new HttpClient())
+            using (var client = new System.Net.Http.HttpClient())
             {
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Ini.access_token);
 
@@ -84,52 +115,19 @@ namespace AlexaIOT
                     byteContant.Headers.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"audio\"");
                     content.Add(byteContant, "file", "audio");
 
-                    HttpResponseMessage message =null;
+                    System.Net.Http.HttpResponseMessage message = await client.PostAsync(eventsURL.ToString(), content);
+                    Stream streamResponse = await message.Content.ReadAsStreamAsync();
+                    string getDirectives = message.Content.ReadAsStringAsync().Result;
 
                     try
                     {
-                        message = await client.PostAsync(eventsURL.ToString(), content);
-                        Stream streamResponse = await message.Content.ReadAsStreamAsync();
-                        string getDirectives = message.Content.ReadAsStringAsync().Result;
-
                         var memStream = new MemoryStream();
-
-                        // Convert the stream to the memory stream, because a memory stream supports seeking.
                         await streamResponse.CopyToAsync(memStream);
-
-                        // Set the start position.
                         memStream.Position = 0;
 
                         StorageFile file = await KnownFolders.MusicLibrary.CreateFileAsync("response.wav", CreationCollisionOption.ReplaceExisting);
                         await Windows.Storage.FileIO.WriteBytesAsync(file, memStream.ToArray());
                         await Audio.PlayAudio(file);
-
-                        using (StringReader reader = new StringReader(getDirectives))
-                        {
-                            string line;
-                            while ((line = reader.ReadLine()) != null)
-                            {
-                                if (line.Contains("{\"directive\":{\""))
-                                {
-                                    if(line.Contains("\"name\":\"Speak\"")) // Alexa speaking
-                                    {
-                                        isSpkeaing = true;
-                                        Audio.fileInput.FileCompleted += FileInput_FileCompleted;
-                                    } else if (line.Contains("\"name\":\"ExpectSpeech\"")) // Open mic and record
-                                    {
-                                        expectSpeech = true;
-                                        double timeOut = 8000; // Default
-                                        string timeOuts = Ini.GetStringInBetween("\"timeoutInMilliseconds\":", "}}}", line, false, false);
-                                        Double.TryParse(timeOuts, out timeOut);
-                                    }
-                                }
-                                else if (line.Contains("\"name\":\"Play\"")) // Play radio
-                                {
-                                    audioURL = Ini.GetStringInBetween("},\"url\":\"", "\",\"token\"", line, false, false);
-                                    playURL = true;
-                                }
-                            }
-                        }
                     }
                     catch (Exception e)
                     {
@@ -141,7 +139,7 @@ namespace AlexaIOT
 
         private async void FileInput_FileCompleted(Windows.Media.Audio.AudioFileInputNode sender, object args)
         {
-            isSpkeaing = false;
+            Debug.WriteLine("Completed speech");
             if (expectSpeech)
             {
                 Audio.fileInput.FileCompleted -= FileInput_FileCompleted;
